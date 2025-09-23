@@ -92,7 +92,7 @@ Change the text inside the `Console.WriteLine()` command. Make it print your nam
 
 #!csharp
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Hello, To the world!");
 
 #!markdown
 
@@ -172,9 +172,16 @@ Note how text can be added together using the ```+``` symbol. Though the ```+```
 #!csharp
 
 // Create your character's variables here
-
+string characterName = "James";
+int characterLevel = 999;
+float attackPower = 600.5f;
+bool isFriendly = true;
 
 // Print your character's information here
+Console.WriteLine("Character Name: " + characterName);
+Console.WriteLine("Level: " + characterLevel);
+Console.WriteLine("Attack Power: " + attackPower);
+Console.WriteLine("Is Friendly?: " + isFriendly);
 
 #!markdown
 
