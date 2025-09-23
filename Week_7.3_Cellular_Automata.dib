@@ -251,11 +251,14 @@ float updateInterval = 0.1f; // 10 generations per second
 void AddGlider(GameOfLife game, int startX, int startY)
 {
     // Classic glider pattern
-    game.SetCell(startX + 1, startY, true);
-    game.SetCell(startX + 2, startY + 1, true);
-    game.SetCell(startX, startY + 2, true);
-    game.SetCell(startX + 1, startY + 2, true);
-    game.SetCell(startX + 2, startY + 2, true);
+    int mouseX = Raylib.GetMouseX() / cellSize;
+    int mouseY = Raylib.GetMouseY() / cellSize;
+    
+    game.SetCell(mouseX + 1, mouseY, true);
+    game.SetCell(mouseX + 2, mouseY + 1, true);
+    game.SetCell(mouseX, mouseY + 2, true);
+    game.SetCell(mouseX + 1, mouseY + 2, true);
+    game.SetCell(mouseX + 2, mouseY + 2, true);
 }
 
 void AddOscillator(GameOfLife game, int startX, int startY)
@@ -280,7 +283,7 @@ AddGlider(gameOfLife, 10, 10);
 AddOscillator(gameOfLife, 20, 15);
 AddBlock(gameOfLife, 5, 25);
 
-Raylib.InitWindow(800, 600, "Conway's Game of Life");
+Raylib.InitWindow(800, 700, "Conway's Game of Life");
 Raylib.SetTargetFPS(60);
 
 while (!Raylib.WindowShouldClose())
@@ -324,7 +327,8 @@ while (!Raylib.WindowShouldClose())
     }
     
     Raylib.BeginDrawing();
-    Raylib.ClearBackground(Color.Black);
+    Raylib.ClearBackground(Color.SkyBlue);
+    Raylib.DrawRectangle(0, 600, 800, 200, Color.Black);
     
     // Draw cells
     for (int x = 0; x < gameOfLife.Width; x++)
@@ -333,20 +337,11 @@ while (!Raylib.WindowShouldClose())
         {
             if (gameOfLife.GetCell(x, y))
             {
-                Raylib.DrawRectangle(x * cellSize, y * cellSize, cellSize - 1, cellSize - 1, Color.White);
+                Raylib.DrawRectangle(x * cellSize, y * cellSize, cellSize - 1, cellSize - 1, Color.Blue);
             }
         }
     }
-    
-    // Draw grid lines (subtle)
-    for (int x = 0; x <= gameOfLife.Width; x++)
-    {
-        Raylib.DrawLine(x * cellSize, 0, x * cellSize, gameOfLife.Height * cellSize, new Color(40, 40, 40, 255));
-    }
-    for (int y = 0; y <= gameOfLife.Height; y++)
-    {
-        Raylib.DrawLine(0, y * cellSize, gameOfLife.Width * cellSize, y * cellSize, new Color(40, 40, 40, 255));
-    }
+
     
     // UI
     Raylib.DrawText("Conway's Game of Life", 10, gameOfLife.Height * cellSize + 10, 16, Color.White);
