@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "EoXHevk/qMk=",
+  "success": true,
+  "projectFilePath": "D:\\James Tiernan\\CRE132 - PROGRAMMING\\Projects\\ConsoleApp1\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\B01015513\\.nuget\\packages\\raylib-cs\\7.0.1\\raylib-cs.7.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

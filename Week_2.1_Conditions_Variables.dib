@@ -117,6 +117,18 @@ else
 #!csharp
 
 // Your password checker code goes here!
+using System;
+
+string pass = "Pass123";
+string entry = Console.ReadLine();
+
+if (pass == entry)
+{
+    Console.WriteLine("Correct");
+}
+else {
+    Console.WriteLine("Incorrect");
+}
 
 #!markdown
 
@@ -149,13 +161,15 @@ Note that there are also code keywords for defining information that cannot be c
 
 using System;
 
-string name = "..?..";          // text data type
-int age = 0;                    // integer data type
-float averageMark = 19.95f;     // floating-point data type
-char averageGrade = 'A';        // single character data type
-bool coursePassed = false;       // boolean (logical) data type
+string name = "Jack";          // text data type
+int age = 18;                    // integer data type
+float averageMark = 67.41f;     // floating-point data type
+char averageGrade = 'B';        // single character data type
+bool coursePassed = true;       // boolean (logical) data type
 
 // ! add pass or fail logic here to set the coursePassed variable !
+if (averageMark >= 40) {coursePassed = false;}
+
 
 // some code to determine if the course was passed or failed
 string result = "";
@@ -282,3 +296,42 @@ Right now, the game only tells the player if their guess was right or wrong. Mod
 #!csharp
 
 // Your improved guessing game code goes here!
+// The computer picks a secret number
+int secretNumber = 7;
+
+Console.WriteLine("I'm thinking of a number between 1 and 10.");
+Console.WriteLine("Can you guess what it is?");
+
+// Get the user's guess as a string
+string guessText = Console.ReadLine();
+
+// Convert the string to an integer
+int playerGuess = int.Parse(guessText);
+
+// Check the guess
+if (playerGuess > secretNumber)
+{
+    if (playerGuess > secretNumber + 5)
+    {
+        Console.WriteLine("Ice cold! The number was " + secretNumber);
+    }
+    else
+    {
+        Console.WriteLine("Red hot! The number was " + secretNumber);
+    }
+}
+else if (playerGuess < secretNumber)
+{
+    if (playerGuess < secretNumber - 5)
+    {
+        Console.WriteLine("Ice cold! The number was " + secretNumber);
+    }
+    else
+    {
+        Console.WriteLine("Red hot! The number was " + secretNumber);
+    }
+}
+else
+{
+    Console.WriteLine("You got it! You are a master guesser!");
+}

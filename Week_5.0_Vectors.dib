@@ -108,7 +108,7 @@ void RandomWalk(ref Vector2 position, int screenWidth, int screenHeight)
     Color color = RandomColor();
 
     // Draw the current position
-    DrawCircle((int)position.X, (int)position.Y, dotSize, Color.White);
+    DrawCircle((int)position.X, (int)position.Y, dotSize, color);
 }
 
 #!markdown

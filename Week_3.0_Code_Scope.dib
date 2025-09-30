@@ -1,6 +1,6 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
 
 #!markdown
 
@@ -66,7 +66,7 @@ class ScopeDemo
         }
 
         // Trying to access blockVariable here will result in a compile-time error as blockVariable was declared within the scope of the if block
-        Console.WriteLine(blockVariable); // Commenting this line will fix the error
+        //Console.WriteLine(blockVariable); // Commenting this line will fix the error
     }
 }
         
