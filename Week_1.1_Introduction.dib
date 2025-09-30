@@ -330,6 +330,70 @@ https://github.com/raylib-cs/raylib-cs/tree/master/Raylib-cs/types
 #!csharp
 
 // Your customized window code goes here!
+using Raylib_cs;
+using System;
+
+const int windowWidth = 1080;
+const int windowHeight = 720;
+
+public int textX = Raylib.GetRandomValue(100,900);
+public int textY = Raylib.GetRandomValue(100,600);
+
+public int textVelX = Raylib.GetRandomValue(-12,12);
+public int textVelY = Raylib.GetRandomValue(-12,12);
+
+public int foodX = Raylib.GetRandomValue(0,windowWidth);
+public int foodY = Raylib.GetRandomValue(0,windowHeight);
+
+public int textSize = 10;
+public string text = "@";
+
+Raylib.InitWindow(windowWidth,windowHeight,"James' Window");
+Raylib.SetTargetFPS(30);
+
+while (!Raylib.WindowShouldClose()) 
+    {
+        textVelX = (Raylib.IsKeyDown(KeyboardKey.D) - Raylib.IsKeyDown(KeyboardKey.A)) * 10;
+        textVelY = (Raylib.IsKeyDown(KeyboardKey.S) - Raylib.IsKeyDown(KeyboardKey.W)) * 10;
+        textX += textVelX;
+        // if (textX >= windowWidth - Raylib.MeasureText(text, textSize)) {
+        //     textX -= textVelX + 5;
+        // }
+        // if (textX <= 0) {
+        //     textX += textVelX + 5;
+        // }
+
+        textY += textVelY;
+        // if (textY >= windowHeight - textSize) {
+        //     textY -= textVelY + 5;
+        // }
+        // if (textY <= 0) {
+        //     textY += textVelY + 5;
+        // }
+        // if (hitTop && hitSide) {
+        // }
+
+        //Vector2 pointA = new Vector2(foodX,foodY);
+        //Vector2 pointB = new Vector2(textX,textY);
+        if (((textX - foodX) + (textY - foodY)) < 50) {
+            textSize += 5;
+            foodX = Raylib.GetRandomValue(0,windowWidth);
+            foodY = Raylib.GetRandomValue(0,windowHeight);
+        }
+        
+        Raylib.DrawText(("dist:" + (textX - foodX) + (textY - foodY)), 0, 0, 60, Color.DarkGreen);
+
+        Raylib.BeginDrawing();
+
+        Raylib.ClearBackground(Color.Orange);
+        Raylib.DrawText(text, textX, textY, textSize, Color.Red);
+        Raylib.DrawText(".", foodX, foodY, 60, Color.DarkGreen);
+
+        Raylib.EndDrawing();
+    }
+
+Raylib.CloseWindow();
+    
 
 #!markdown
 
@@ -345,40 +409,6 @@ Run the following and note the use of `using static Raylib_cs.Raylib;` so we don
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-
-// Initialize the window
-const int screenWidth = 800;
-const int screenHeight = 600;
-InitWindow(screenWidth, screenHeight, "Raylib [C#] - Drawing Shapes Example");
-
-// Set the target FPS
-SetTargetFPS(60);
-
-while (!WindowShouldClose())
-{
-    BeginDrawing();
-    ClearBackground(Color.White); // Clear the background to white
-
-    // Draw rectangles - xpos, ypos, width, height
-    DrawRectangle(100, 100, 200, 150, Color.Red);
-    DrawRectangleLines(100, 100, 200, 150, Color.Black);
-    
-    // Draw circles - xpos, ypos, radius
-    DrawCircle(400, 225, 50, Color.Blue);
-    DrawCircleLines(400, 225, 50, Color.Black);
-    
-    // Draw more shapes - xpos, ypos, width, height
-    DrawRectangle(500, 200, 100, 100, Color.Green);
-    DrawRectangleLines(500, 200, 100, 100, Color.Black);
-
-    // Draw more shapes - xpos, ypos, radius
-    DrawCircle(650, 300, 75, Color.Yellow);
-    DrawCircleLines(650, 300, 75, Color.Black);
-
-    EndDrawing();
-}
-
-CloseWindow();
 
 #!markdown
 
