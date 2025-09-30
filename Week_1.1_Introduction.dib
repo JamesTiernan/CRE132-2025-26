@@ -332,12 +332,12 @@ https://github.com/raylib-cs/raylib-cs/tree/master/Raylib-cs/types
 // Your customized window code goes here!
 using Raylib_cs;
 using System;
+using System.Numerics;
 
 const int windowWidth = 1080;
 const int windowHeight = 720;
 
-public int textX = Raylib.GetRandomValue(100,900);
-public int textY = Raylib.GetRandomValue(100,600);
+Vector2 playerPos = new Vector2(windowWidth/2,windowHeight/2);
 
 public int textVelX = Raylib.GetRandomValue(-12,12);
 public int textVelY = Raylib.GetRandomValue(-12,12);
@@ -353,7 +353,18 @@ Raylib.SetTargetFPS(30);
 
 while (!Raylib.WindowShouldClose()) 
     {
-        textVelX = (Raylib.IsKeyDown(KeyboardKey.D) - Raylib.IsKeyDown(KeyboardKey.A)) * 10;
+        Raylib.BeginDrawing();
+        
+        playerMovement(ref playerPos);  
+
+        Raylib.EndDrawing(;)
+    }
+
+Raylib.CloseWindow();
+    
+void playerMovement(ref Vector2 position)
+{
+     textVelX = (Raylib.IsKeyDown(KeyboardKey.D) - Raylib.IsKeyDown(KeyboardKey.A)) * 10;
         textVelY = (Raylib.IsKeyDown(KeyboardKey.S) - Raylib.IsKeyDown(KeyboardKey.W)) * 10;
         textX += textVelX;
         // if (textX >= windowWidth - Raylib.MeasureText(text, textSize)) {
@@ -373,27 +384,25 @@ while (!Raylib.WindowShouldClose())
         // if (hitTop && hitSide) {
         // }
 
-        //Vector2 pointA = new Vector2(foodX,foodY);
-        //Vector2 pointB = new Vector2(textX,textY);
-        if (((textX - foodX) + (textY - foodY)) < 50) {
+        Vector2 pointA = new Vector2(foodX,foodY);
+        Vector2 pointB = position
+        float distance = Raymath.Vector2Distance(pointA,pointB);
+        if (distance < textSize) {
             textSize += 5;
             foodX = Raylib.GetRandomValue(0,windowWidth);
             foodY = Raylib.GetRandomValue(0,windowHeight);
         }
-        
-        Raylib.DrawText(("dist:" + (textX - foodX) + (textY - foodY)), 0, 0, 60, Color.DarkGreen);
+        Raylib.DrawText("dist:" + distance, 0, 0, 60, Color.DarkGreen);
 
-        Raylib.BeginDrawing();
+       
 
         Raylib.ClearBackground(Color.Orange);
-        Raylib.DrawText(text, textX, textY, textSize, Color.Red);
+
+        textX = 
+
+        Raylib.DrawCircle((int)position.X, (int)position.Y, 30, Color.White);
         Raylib.DrawText(".", foodX, foodY, 60, Color.DarkGreen);
-
-        Raylib.EndDrawing();
-    }
-
-Raylib.CloseWindow();
-    
+}
 
 #!markdown
 
