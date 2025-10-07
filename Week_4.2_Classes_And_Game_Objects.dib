@@ -366,6 +366,31 @@ public class ClassName
 // Write your Enemy class here:
 // TODO: Create the Enemy class with all required properties, constructor, and methods
 
+public class Enemy(string name)
+{
+    public int health = 50;
+    public int attackPower = 15;
+
+    public void DisplayStats()
+    {
+        Console.Write(name + " - ");
+        Console.Write("Health: " + health + ", ");
+        Console.Write("Attack Power: " + attackPower +"\n");
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        Console.Write(name + " takes " + damage + " damage! Health now: "+ health);
+        Console.Write("\n");
+    }
+
+    public bool IsAlive()
+    {
+        if (health > 0){return true;}
+        else {return false;}
+    }
+}
 
 
 // Test your Enemy class with this code (don't modify this part):
@@ -426,7 +451,29 @@ Goblin alive after heavy damage? False
 // Write your Item class here:
 // TODO: Create the Item class with all required properties, constructor, and methods
 
+public class Item(string name, int value)
+{
+    bool IsCollected = false;
 
+    public string GetDescription()
+    {
+        string text;
+        if (IsCollected){text = "Collected";}
+        else {text = "Available";}
+        return $"{name} ({value} gold) - {text}";
+    }
+
+    public int Collect()
+    {
+        if (!IsCollected)
+        {
+            IsCollected = true;
+            return value;
+        }
+        else {return 0;}
+        
+    }
+}
 
 // Test your Item class (don't modify this):
 Console.WriteLine("=== Testing Item Class ===");
@@ -501,7 +548,19 @@ Raylib.DrawCircle((int)x, (int)y, radius, color);
 // Write your Star class here:
 // TODO: Create the Star class with all required properties, constructor, and methods
 
+class Star(int x, int y, int size, Color StarColor)
+{
+    public int originalSize = size;
+    public void Draw()
+    {
+        Raylib.DrawCircle(x,y,size,StarColor);
+    }
 
+    public void Twinkle()
+    {
+        size = Raylib.GetRandomValue(originalSize -5,originalSize +5);
+    }
+}
 
 // Test framework (don't modify this part):
 Raylib.InitWindow(800, 600, "Challenge 3: Animated Stars");
