@@ -140,4 +140,63 @@ Raylib.CloseWindow();
 
 #!csharp
 
+using Raylib_cs;
 // Your code here 
+
+int Multiply(int a, int b)
+{
+    return a * b;
+}
+int Max(int a, int b)
+{
+    if (a>b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+Console.WriteLine(Multiply(8,8));
+
+Console.WriteLine(Max(7,12));
+
+#!csharp
+
+using Raylib_cs;
+
+static void DrawRect(int x, int y, int width,int height,Color color)
+{
+    Raylib.DrawRectangle(x,y,width,height,color);
+}
+
+Raylib.InitWindow(2000, 2000, "Rectangle Method");
+Raylib.SetTargetFPS(60);
+
+int size = 30;
+
+
+while (!Raylib.WindowShouldClose())
+{
+    int h = Raylib.GetRandomValue(3,12);
+    Raylib.BeginDrawing();
+    Raylib.ClearBackground(Color.White);
+    
+    for (int x = 0; x < 80; x++)
+    {
+        h += Raylib.GetRandomValue(-1,1);
+        for (int y = 0; y < 50; y++)
+        {
+            if (y == h){DrawRect(x * size, y * size, size,size,Color.Green);}
+            else if (y >= 1 + h && y < 5 + h){DrawRect(x * size, y * size, size,size,Color.Brown);}
+            else if (y < h){DrawRect(x * size, y * size, size,size,Color.Blue);}
+            else {DrawRect(x * size, y * size, size,size,Color.Gray);}
+        }
+    }
+    
+    Raylib.EndDrawing();
+}
+
+Raylib.CloseWindow();

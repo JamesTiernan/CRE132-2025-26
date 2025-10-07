@@ -65,7 +65,7 @@ else
 
 #!csharp
 
-int playerHealth = 45;
+int playerHealth = 55;
 
 if (playerHealth > 50)
 {
@@ -161,9 +161,9 @@ Note that there are also code keywords for defining information that cannot be c
 
 using System;
 
-string name = "Jack";          // text data type
-int age = 18;                    // integer data type
-float averageMark = 67.41f;     // floating-point data type
+string name = "Sixen Seven";          // text data type
+int age = 67;                    // integer data type
+float averageMark = 67.4f;     // floating-point data type
 char averageGrade = 'B';        // single character data type
 bool coursePassed = true;       // boolean (logical) data type
 

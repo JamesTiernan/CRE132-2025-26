@@ -28,7 +28,10 @@ Let's look at a typical piece of Raylib code we might have written in previous s
 
 #!csharp
 
+using System;
+using System.Numerics;
 using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 // A messy example - everything in one place
 Raylib.InitWindow(800, 600, "Messy Code Example");
@@ -39,7 +42,8 @@ float ballX = 100;
 float ballY = 100;
 float ballSpeedX = 0.2f;
 float ballSpeedY = 0.3f;
-float playerSpeed = 0.5f;
+float playerSpeed = 2f;
+SetTargetFPS(60);
 
 while (!Raylib.WindowShouldClose())
 {
@@ -348,10 +352,8 @@ bool gameRunning = true;
 while (!Raylib.WindowShouldClose() && gameRunning)
 {
     // Input - MOVE THIS TO HandleInput() method
-    if (Raylib.IsKeyDown(KeyboardKey.A)) playerX -= 4;
-    if (Raylib.IsKeyDown(KeyboardKey.D)) playerX += 4;
-    if (Raylib.IsKeyDown(KeyboardKey.W)) playerY -= 4;
-    if (Raylib.IsKeyDown(KeyboardKey.S)) playerY += 4;
+    playerX += (Raylib.IsKeyDown(KeyboardKey.Right) - Raylib.IsKeyDown(KeyboardKey.Left)) * 0.2f;
+    playerY += (Raylib.IsKeyDown(KeyboardKey.Down) - Raylib.IsKeyDown(KeyboardKey.Up)) * 0.2f;
     
     // Star movement - MOVE THIS TO UpdateStars() method
     starY += 2;

@@ -82,22 +82,8 @@ int playerSpeed = 5;
 while (!Raylib.WindowShouldClose())
 {
     // --- UPDATE LOGIC ---
-    if (Raylib.IsKeyDown(KeyboardKey.Right))
-    {
-        playerX += playerSpeed; // Same as playerX = playerX + playerSpeed;
-    }
-    if (Raylib.IsKeyDown(KeyboardKey.Left))
-    {
-        playerX -= playerSpeed;
-    }
-    if (Raylib.IsKeyDown(KeyboardKey.Up))
-    {
-        playerY -= playerSpeed;
-    }
-    if (Raylib.IsKeyDown(KeyboardKey.Down))
-    {
-        playerY += playerSpeed;
-    }
+    playerX += (Raylib.IsKeyDown(KeyboardKey.Right) - Raylib.IsKeyDown(KeyboardKey.Left)) * playerSpeed;
+    playerY += (Raylib.IsKeyDown(KeyboardKey.Down) - Raylib.IsKeyDown(KeyboardKey.Up)) * playerSpeed;
 
     // --- DRAWING ---
     Raylib.BeginDrawing();
@@ -173,10 +159,8 @@ CloseWindow();
 Vector2 UpdateRectanglePosition(Vector2 position, float speed, int rectWidth, int rectHeight, int screenWidth, int screenHeight)
 {
     // Update position based on cursor keys
-    if (IsKeyDown(KeyboardKey.Right)) position.X += speed;
-    if (IsKeyDown(KeyboardKey.Left)) position.X -= speed;
-    if (IsKeyDown(KeyboardKey.Up)) position.Y -= speed;
-    if (IsKeyDown(KeyboardKey.Down)) position.Y += speed;
+    position.X += (Raylib.IsKeyDown(KeyboardKey.Right) - Raylib.IsKeyDown(KeyboardKey.Left)) * speed;
+    position.Y += (Raylib.IsKeyDown(KeyboardKey.Down) - Raylib.IsKeyDown(KeyboardKey.Up)) * speed;
 
     // Prevent the rectangle from moving out of the screen bounds
     if (position.X < 0) position.X = 0;

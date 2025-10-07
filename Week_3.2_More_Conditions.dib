@@ -23,7 +23,7 @@ if(true) {
     Console.WriteLine("The first code block will run because the condition is true");
 }
 // Second code block
-if (false) {
+else {
     Console.WriteLine("The second block will not run because the condition is false");
 }
 
@@ -53,9 +53,12 @@ We can also implement a `do {;} while ();` conditional loop if we want to make t
 
 #!csharp
 
+int x = 6;
+
 do {
+    x -= 1;
     Console.WriteLine("This will run at least once because the condition is checked after the code block");
-} while (false);
+} while (x > 0);
 
 #!markdown
 
@@ -172,7 +175,9 @@ enum TimeOfDay
 {
     // Define the values for the enum: Morning, Afternoon, Evening, Night
     Morning,
-    // more values here
+    Afternoon,
+    Evening,
+    Night
 }
 
 // Get the current hour from a standard system function in C#
@@ -185,11 +190,11 @@ TimeOfDay timeOfDay = TimeOfDay.Morning;
 // if hour is greater than or equal to 5 and less than 12, it's morning
 if (hour >= 5 && hour < 12) timeOfDay = TimeOfDay.Morning;
 // if hour is greater than or equal to 12 and less than 17, it's afternoon
-
+else if (hour >= 12 && hour < 17) timeOfDay = TimeOfDay.Afternoon;
 // if hour is greater than or equal to 17 and less than 20, it's evening
-
+else if (hour >= 17) timeOfDay = TimeOfDay.Evening;
 // otherwise, it's night
-
+else timeOfDay = TimeOfDay.Night;
 
 // Output the time of day
 Console.WriteLine($"The current period of day is: {timeOfDay}"); // another way to format strings in C# using string interpolation

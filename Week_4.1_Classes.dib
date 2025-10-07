@@ -21,7 +21,7 @@ class Animal
 {
     // Property to hold the animal's name
     public string Name { get; set; } // correct way to define a property
-
+    public bool isMoving { get; set; }
     // Constructor to initialize the animal's name
     public Animal(string name)
     {
@@ -32,6 +32,11 @@ class Animal
     public virtual void MakeNoise()
     {
         Console.WriteLine($"{Name} makes some generic animal noise");
+    }
+
+    public virtual void Move()
+    {
+        Console.WriteLine($"{Name} moves around.");
     }
 }
 
@@ -52,6 +57,11 @@ class Dog : Animal
     {
         Console.WriteLine($"{Name} says: Woof!");
     }
+
+    public override void Move()
+    {
+        Console.WriteLine($"{Name} runs around.");
+    }
 }
 
 // Derived class: Cat
@@ -64,6 +74,47 @@ class Cat : Animal
     public override void MakeNoise()
     {
         Console.WriteLine($"{Name} says: Meow!");
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine($"{Name} prowls around.");
+    }
+}
+
+// Derived class: Hawk
+class Hawk : Animal
+{
+    // Constructor to initialize the Hawk's name
+    public Hawk(string name) : base(name) { } // Call the base class constructor
+
+    // Override the MakeNoise method
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"{Name} says: Tuah!");
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine($"{Name} flys around.");
+    }
+}
+
+// Derived class: Fish
+class Fish : Animal
+{
+    // Constructor to initialize the Fish's name
+    public Fish(string name) : base(name) { } // Call the base class constructor
+
+    // Override the MakeNoise method
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"{Name} says: Glub Glub!");
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine($"{Name} swims around.");
     }
 }
 
@@ -78,6 +129,11 @@ class Cow : Animal
     {
         Console.WriteLine($"{Name} says: Moo!");
     }
+
+    public override void Move()
+    {
+        Console.WriteLine($"{Name} stomps around.");
+    }
 }
 
 Console.WriteLine("Dog, Cat, and Cow classes derived from Animal class");
@@ -91,16 +147,22 @@ Animal genericAnimal = new Animal("Generic Animal");
 Dog dog = new Dog("Buddy");
 Cat cat = new Cat("Whiskers");
 Cow cow = new Cow("Bessie");
-
+Hawk hawk = new Hawk("Hawk");
+Fish fish = new Fish("Fishsticks");
 // Call the MakeNoise method on each instance
 genericAnimal.MakeNoise(); // Output: Generic Animal makes some generic animal noise
 
 // Demonstrate polymorphism
-Animal[] animals = { dog, cat, cow }; // Array of Animal objects
+Animal[] animals = { dog, cat, cow,hawk, fish}; // Array of Animal objects
 
 foreach (Animal animal in animals) // Loop through each Animal object in the array
 {
     animal.MakeNoise(); // Output: Buddy says: Woof!, Whiskers says: Meow!, Bessie says: Moo!
+    int rand = random.Next(25);
+    if (rand <5) animal.isMoving = true;
+    else animal.isMoving = false;
+    if (animal.isMoving)animal.Move();
+    
 }
 
 #!markdown

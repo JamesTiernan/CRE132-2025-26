@@ -96,6 +96,10 @@ The program should print:
 #!csharp
 
 // Your loop to print the song lyrics goes here!
+for (int i = 99; i >0; i--)
+{
+    Console.Write(i + " bottles of pop on the wall ");
+}
 
 #!markdown
 
@@ -182,6 +186,19 @@ for (int y = 0; y < size; y++)
 #!csharp
 
 // Your triangle-drawing code goes here!
+int size = 100;
+
+// The outer loop handles the rows
+for (int y = 0; y < size; y++)
+{
+    // The inner loop handles the columns for each row
+    for (int x = 0; x < y + 1; x++)
+    {
+        Console.Write("# "); // Write a character
+    }
+    // After the inner loop finishes, go to the next line
+    Console.WriteLine(); 
+}
 
 #!markdown
 
@@ -273,3 +290,32 @@ This is a challenging task, but it's a perfect preview of the kinds of things we
 #!csharp
 
 // Your rain effect code goes here!
+using Raylib_cs;
+
+const int screenWidth = 800;
+const int screenHeight = 600;
+
+Raylib.InitWindow(screenWidth, screenHeight, "Falling Raindrop");
+Raylib.SetTargetFPS(60);
+
+int spacing = 50;
+int x = Raylib.GetRandomValue(0,screenWidth);
+int y = -10;
+while (!Raylib.WindowShouldClose())
+{
+    Raylib.BeginDrawing();
+    Raylib.ClearBackground(Color.DarkBlue);
+
+    
+    Raylib.DrawCircle(x, y, 10, Color.Blue);
+    y += 55;
+    if (y > screenHeight + 10)
+    {
+        y = -10;
+        x = Raylib.GetRandomValue(0,screenWidth);
+    }
+  
+    Raylib.EndDrawing();
+}
+
+Raylib.CloseWindow();
