@@ -567,6 +567,238 @@ using System.Collections.Generic;
 // TODO: Create your Bullet class
 // Properties: X, Y, SpeedX, SpeedY, IsActive, Radius
 // Methods: Update() (move bullet), Draw(), CollidesWith()
+public class Bullet() {
+    int X = 0;
+    int Y = 0;
+    int SpeedX = 12;
+    int SpeedY = 0;
+    bool isActive = true;
+    int radius = 3;
+
+    public void Update() {
+        if (isActive) {
+            moveBullet();
+        }
+    }
+
+    public void moveBullet() {
+        if (isActive) {
+            X += SpeedX;
+            Y += SpeedY;
+        }
+    }
+
+    public bool CollidesWith(float otherX, float otherY, float otherRadius)
+    {
+        float deltaX = X - otherX;
+        float deltaY = Y - otherY;
+        float distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance < (radius + otherRadius);
+    }
+
+    public void Draw() {
+        if (isActive) {
+            Raylib.DrawCircle((int)X, (int)Y, radius, Color.Red);
+        }
+    }
+}
+
+public class Player
+{
+    public float X, Y;
+    public float Speed;
+    public Color PlayerColor;
+    public float Radius;
+    public int Health;
+    public int Score;
+    
+    public Player(float startX, float startY)
+    {
+        X = startX;
+        Y = startY;
+        Speed = 4.0f;
+        PlayerColor = Color.Blue;
+        Radius = 20;
+        Health = 100;
+        Score = 0;
+    }
+    
+    public void Update()
+    {
+        // Handle input
+        if (Raylib.IsKeyDown(KeyboardKey.W) || Raylib.IsKeyDown(KeyboardKey.Up)) Y -= Speed;
+        if (Raylib.IsKeyDown(KeyboardKey.S) || Raylib.IsKeyDown(KeyboardKey.Down)) Y += Speed;
+        if (Raylib.IsKeyDown(KeyboardKey.A) || Raylib.IsKeyDown(KeyboardKey.Left)) X -= Speed;
+        if (Raylib.IsKeyDown(KeyboardKey.D) || Raylib.IsKeyDown(KeyboardKey.Right)) X += Speed;
+        
+        // Keep player on screen
+        if (X < Radius) X = Radius;
+        if (X > 800 - Radius) X = 800 - Radius;
+        if (Y < Radius) Y = Radius;
+        if (Y > 600 - Radius) Y = 600 - Radius;
+    }
+    
+    public void Draw()
+    {
+        Raylib.DrawCircle((int)X, (int)Y, Radius, PlayerColor);
+        Raylib.DrawCircleLines((int)X, (int)Y, Radius, Color.White);
+        
+        // Draw health bar
+        float healthPercent = Health / 100.0f;
+        int barWidth = (int)(40 * healthPercent);
+        Raylib.DrawRectangle((int)X - 20, (int)Y - 35, 40, 6, Color.Red);
+        Raylib.DrawRectangle((int)X - 20, (int)Y - 35, barWidth, 6, Color.Green);
+    }
+    
+    public bool CollidesWith(float otherX, float otherY, float otherRadius)
+    {
+        float deltaX = X - otherX;
+        float deltaY = Y - otherY;
+        float distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance < (Radius + otherRadius);
+    }
+}
+
+// Asteroid
+public class Asteroid
+{
+    public float X, Y;
+    public float SpeedX, SpeedY;
+    public Color AsteroidColor;
+    public float Radius;
+    public bool IsActive;
+    public static readonly Color DarkRed = new Color(139, 0, 0, 255); // Custom DarkRed
+    
+    public Asteroid(float startX, float startY)
+    {
+        X = startX;
+        Y = startY;
+        SpeedX = Raylib.GetRandomValue(-2, 2);
+        SpeedY = Raylib.GetRandomValue(-2, 2);
+        AsteroidColor = Color.Gray;
+        Radius = 15;
+        IsActive = true;
+    }
+    
+    public void Update()
+    {
+        // Simple bouncing movement
+        X += SpeedX;
+        Y += SpeedY;
+        
+        // Bounce off walls
+        if (X <= Radius || X >= 800 - Radius) SpeedX = -SpeedX;
+        if (Y <= Radius || Y >= 600 - Radius) SpeedY = -SpeedY;
+        
+        // Keep on screen
+        if (X < Radius) X = Radius;
+        if (X > 800 - Radius) X = 800 - Radius;
+        if (Y < Radius) Y = Radius;
+        if (Y > 600 - Radius) Y = 600 - Radius;
+    }
+    
+    public void Draw()
+    {
+        if (IsActive)
+        {
+            Raylib.DrawCircle((int)X, (int)Y, Radius, AsteroidColor);
+            Raylib.DrawCircleLines((int)X, (int)Y, Radius, Color.DarkGray);
+        }
+    }
+    
+    public bool CollidesWith(float otherX, float otherY, float otherRadius)
+    {
+        if (!IsActive) return false;
+        
+        float deltaX = X - otherX;
+        float deltaY = Y - otherY;
+        float distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance < (Radius + otherRadius);
+    }
+}
+
+// Collectible class - items to gather
+public class Collectible
+{
+    public float X, Y;
+    public Color ItemColor;
+    public float Radius;
+    public bool IsCollected;
+    public int Value;
+    public float BobOffset; // For floating animation
+    
+    public Collectible(float startX, float startY, int value)
+    {
+        X = startX;
+        Y = startY;
+        ItemColor = Color.Gold;
+        Radius = 12;
+        IsCollected = false;
+        Value = value;
+        BobOffset = Raylib.GetRandomValue(0, 360);
+    }
+    
+    public void Update()
+    {
+        // Gentle floating animation
+        BobOffset += 2.0f;
+        if (BobOffset > 360) BobOffset = 0;
+    }
+    
+    public void Draw()
+    {
+        if (!IsCollected)
+        {
+            float floatY = Y + (float)Math.Sin(BobOffset * Math.PI / 180) * 3;
+            Raylib.DrawCircle((int)X, (int)floatY, Radius, ItemColor);
+            Raylib.DrawCircleLines((int)X, (int)floatY, Radius, Color.Orange);
+            
+            // Draw sparkle effect
+            if (Raylib.GetRandomValue(1, 30) == 1)
+            {
+                Raylib.DrawCircle((int)X + Raylib.GetRandomValue(-5, 5), 
+                                (int)floatY + Raylib.GetRandomValue(-5, 5), 
+                                2, Color.White);
+            }
+        }
+    }
+    
+    public bool CollidesWith(float otherX, float otherY, float otherRadius)
+    {
+        if (IsCollected) return false;
+        
+        float floatY = Y + (float)Math.Sin(BobOffset * Math.PI / 180) * 3;
+        float deltaX = X - otherX;
+        float deltaY = floatY - otherY;
+        float distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance < (Radius + otherRadius);
+    }
+}
+
+
+while (!Raylib.WindowShouldClose())
+{
+    // Drawing
+    Raylib.BeginDrawing();
+    Raylib.ClearBackground(Color.DarkGreen);
+
+    // Draw all objects
+    player.Draw();
+
+    foreach (Asteroid asteroid in asteroids)
+    {
+        asteroid.Draw();
+    }
+
+    foreach (Collectible collectible in collectibles)
+    {
+        collectible.Draw();
+    }
+
+    Raylib.EndDrawing();
+}
+
+Raylib.CloseWindow();
 
 // TODO: Create your Asteroid class  
 // Properties: X, Y, SpeedX, SpeedY, Radius, Health, IsActive
